@@ -1,0 +1,55 @@
+include cs50.h
+include ctype.h
+include stdio.h
+include stdlib.h
+
+
+int main(argument_count, argument_vector):
+
+    if argument_count > 2 or argument_count < 2:
+        print("Usage: ./caesar key")
+        return 1
+    else:
+        key = argument_vector[1]
+
+        # check if characters in argument are all digits
+        for character in key:
+            if character isdigit:
+                pass
+            else:
+                print("Usage: ./caesar key")
+                return 1
+
+        long_key = atol(key)
+
+        plaintext = get_string("plaintext: ")
+
+        print("ciphertext: ")
+
+        for character in plaintext:
+            int char_ascii_value = character
+
+            if character isupper:
+                index = char_ascii_value - 65
+                c = index + long_key
+                while c > 25:
+                    c = c % 26
+
+                char encrypted_c = c + 65
+                print(encrypted_c)
+
+            else if character islower:
+                index = char_ascii_value - 97
+                c = index + long_key
+                while c > 25:
+                    c = c % 26
+
+                char encrypted_c = c + 97
+                print(encrypted_c)
+
+            else:
+                print(character)
+
+        print("\n")
+
+
