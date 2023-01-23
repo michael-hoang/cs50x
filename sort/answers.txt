@@ -42,4 +42,4 @@ How do you know?:
     case scenario, and finally 0.071s, 0.2036s, and 9.6122s for worst case scenario.
     Since the runtime is about the same for both the best case and worst case scenario,
     but the runtime increases exponentially as the array gets bigger, this algorithm has
-    Omega(n^2) == O(n^2) making it as selection sort.
+    Omega(n^2) == O(n^2) making it a selection sort.
