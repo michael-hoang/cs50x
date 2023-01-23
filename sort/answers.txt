@@ -1,0 +1,45 @@
+sort1 uses: Bubble Sort
+
+How do you know?:
+
+    In the best case scenario when the entire array is already sorted, sort1 averages
+    a runtime of 0.044s for an array of size 5000, 0.0782s for 10000, and 0.809s for 50000.
+    The runtime scales approximately linearly with the size of the array and thus,
+    sort1 has Omega(n).
+
+    In a random case scenario, sort1 averages runtimes of 0.0776s, 0.2678s, and 8.1606s
+    for array sizes of 5000, 10000, and 50000, respectively. When the size doubles from
+    5000 to 10000, the runtime more than triples. Increasing the size by fivefold from
+    10000 to 50000, the runtime increasses by thirtyfold.
+
+    In the worst case scenario when the entire array is in reversed order, sort1 averages
+    0.0954s, 0.2936s, and 6.1926s for array sizes of 5000, 10000, and 50000, respectively.
+    The runtime increases by threefold from 5000 to 10000, and then further increases
+    by 21-fold from 10000 to 50000. Despite the more efficient runtime of 6.1926s in this
+    scenario compared to 8.1606s in the random case scenario (branch prediction?),
+    both cases observed an exponential increase of runtime as the array size increases.
+    Therefore this algorithm has O(n^2) making it a bubble sort.
+
+sort2 uses: Merge Sort
+
+How do you know?:
+
+    The runtimes for sort2 are about the same across all three sencarios. For array of
+    sizes 5000, 10000, and 50000 (in this exact order), the runtimes are 0.0312s, 0.0784s,
+    and 0.7204s for best case scenario, 0.037s, 0.0626s, and 0.6532s for random case
+    scenario, and finally 0.0368s, 0.076s, and 0.7276s for worst case scenario.
+    Since the runtime is about the same for both the best case and worst case scenario,
+    and the mangnitude of runtime is significantly smaller than that of selection sort,
+    it's safe to conclude that sort2 is a merge sort.
+
+sort3 uses: Selection Sort
+
+How do you know?:
+
+    Similarly to sort2, the runtimes for sort3 are about the same across all scenarios.
+    For array of sizes 5000, 10000, and 50000 (in this exact order), the runtimes are 0.0632s,
+    0.1936s, and 9.6412s for best case scenario, 0.0724s, 0.1954s, and 7.692s for random
+    case scenario, and finally 0.071s, 0.2036s, and 9.6122s for worst case scenario.
+    Since the runtime is about the same for both the best case and worst case scenario,
+    but the runtime increases exponentially as the array gets bigger, this algorithm has
+    Omega(n^2) == O(n^2) making it as selection sort.
