@@ -31,7 +31,7 @@ int max(int array[], int n)
     int swap_flag;
     // In best case scenario, this outer loop runs 1 time because swap_flag will be
     // zero and loop will break out at the end.
-    for (int passthrough = 0; passthrough < (n - 1); passthrough++)
+    for (int passthrough = 0; passthrough <= (n - 1); passthrough++)
     {
         // Reset swap_flag to zero.
         swap_flag = 0;
