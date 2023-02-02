@@ -35,17 +35,15 @@ int main(int argc, char *argv[])
 
     // TODO: Copy header from input file to output file
     uint8_t header[HEADER_SIZE]; // An array in C is just a pointer to the first element of the array.
-    int bytes_read = fread(header, sizeof(uint8_t), HEADER_SIZE, input);
-    fwrite(header, sizeof(uint8_t), HEADER_SIZE, output);
+    fread(header, HEADER_SIZE, 1, input);
+    fwrite(header, HEADER_SIZE, 1, output);
 
     // TODO: Read samples from input file and write updated data to output file
     int16_t buffer;
-    while (bytes_read != 352844)
+    while (fread(&buffer, sizeof(int16_t), 1, input))
     {
-        fread(&buffer, sizeof(int16_t), 1, input);
         buffer *= factor;
         fwrite(&buffer, sizeof(int16_t), 1, output);
-        bytes_read += 2;
     }
 
     // Close files
