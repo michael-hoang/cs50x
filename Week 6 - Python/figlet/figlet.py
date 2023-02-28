@@ -19,20 +19,20 @@ fonts = FigletFont.getFonts()
 argc = len(argv)
 if argc == 1:
     font = random.choice(fonts)
-elif argc == 2:
-    terminate(1)
-else:
+elif argc == 3:
     try:
         font = argv[2]
         if (font not in fonts):
-            terminate(2)
+            terminate(1)
 
         font_flag = argv[1]
         if font_flag != '-f':
             if font_flag != '--font':
-                terminate(3)
+                terminate(2)
     except IndexError:
-        terminate(4)
+        terminate(3)
+else:
+    terminate(4)
 
 text = input('Input: ')
 f = Figlet(font)
