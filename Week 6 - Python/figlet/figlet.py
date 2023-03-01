@@ -20,14 +20,13 @@ argc = len(argv)
 if argc == 1:
     font = random.choice(fonts)
 elif argc == 3:
-    font = argv[2]
-    if (font not in fonts):
-        terminate(1)
-
     font_flag = argv[1]
     if font_flag != '-f':
         if font_flag != '--font':
-            terminate(2)
+            terminate(1)
+    font = argv[2]
+    if (font not in fonts):
+        terminate(2)
 else:
     terminate(3)
 
