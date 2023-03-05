@@ -59,19 +59,18 @@ def calculate(reader: csv.DictReader) -> dict:
 # TODO: Calculate and print out seven day average for given state
 def comparative_averages(new_cases: dict, states: list):
     """Print out the seven day average for the given state(s)."""
-    for state in new_cases:
-        if state in states:
-            current_average = round(sum(new_cases[state][:7]) / 7)
-            previous_average = round(sum(new_cases[state][7:]) / 7)
-            try:
-                percent_change = round(
-                    (current_average - previous_average) / previous_average * 100)
-                change, article = ('decrease', 'a') if percent_change < 0 else ('increase', 'an')
-            except ZeroDivisionError:
-                print(f'{state} had a 7-day average of {current_average}.')
-            else:
-                print(
-                    f'{state} had a 7-day average of {current_average} and {article} {change} of {abs(percent_change)}%.')
+    for state in states:
+        current_average = round(sum(new_cases[state][:7]) / 7)
+        previous_average = round(sum(new_cases[state][7:]) / 7)
+        try:
+            percent_change = round(
+                (current_average - previous_average) / previous_average * 100)
+            change, article = ('decrease', 'a') if percent_change < 0 else ('increase', 'an')
+        except ZeroDivisionError:
+            print(f'{state} had a 7-day average of {current_average}.')
+        else:
+            print(
+                f'{state} had a 7-day average of {current_average} and {article} {change} of {abs(percent_change)}%.')
 
 
 main()
