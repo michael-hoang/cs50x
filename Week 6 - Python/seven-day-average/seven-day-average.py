@@ -60,7 +60,7 @@ def calculate(reader: csv.DictReader) -> dict:
 def comparative_averages(new_cases: dict, states: list):
     """Print out the seven day average for the given state(s)."""
     for state in new_cases:
-        if state in new_cases:
+        if state in states:
             current_average = round(sum(new_cases[state][:7]) / 7)
             previous_average = round(sum(new_cases[state][7:]) / 7)
             try:
