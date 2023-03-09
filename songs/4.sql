@@ -1,0 +1,1 @@
+SELECT name FROM (SELECT * FROM (SELECT name, danceability, energy, valence FROM songs WHERE danceability > 0.75) WHERE energy > 0.75) WHERE valence > 0.75;

@@ -1,0 +1,21 @@
+1. If songs.db contains the top 100 songs of one listener from 2018, how would you
+   characterize their audio aura?
+
+    +-------------+--------------+-------------------+
+    | AVG(energy) | AVG(valence) | AVG(danceability) |
+    +-------------+--------------+-------------------+
+    | 0.65906     | 0.484443     | 0.71646           |
+    +-------------+--------------+-------------------+
+
+    The individual's Audio Aura appears to be balanced across the three
+    attributes, although there is a slightly stronger inclination towards
+    energy and danceability.
+
+2. Hypothesize about why the way you’ve calculated this aura might not be very
+   representative of the listener. What better ways of calculating this aura
+   would you propose?
+
+   A person's musical preference can be very complex. Using just energy, valence,
+   and danceability doesn't account for other qualities of music that a person
+   may value. I would also consider the frequency of different music genres that
+   the person listens to throughout the year.
