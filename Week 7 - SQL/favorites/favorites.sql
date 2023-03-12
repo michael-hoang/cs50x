@@ -12,7 +12,7 @@ UPDATE shows SET title = "Avatar: The Last Airbender" WHERE title LIKE "%vatar%"
 
 UPDATE shows SET title = "Parks and Recreation" WHERE title LIKE "_arks%ec%";
 
-UPDATE shows SET title = "Brooklyn Nine-Nine" WHERE title LIKE "_rooklyn%";
+UPDATE shows SET title = "Brooklyn Nine-Nine" WHERE title LIKE "_rooklyn%" OR title = "B99";
 
 UPDATE shows SET title = "Friends" WHERE title LIKE "_riends";
 
