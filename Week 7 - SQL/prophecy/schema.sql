@@ -7,6 +7,7 @@ CREATE TABLE students (
 CREATE TABLE houses (
     id INTEGER,
     house_name TEXT,
+    head_name TEXT,
     PRIMARY KEY(id)
 );
 
