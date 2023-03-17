@@ -1,2 +1,3 @@
-# cs50-8-html-css-js-lab8
-CS50x Week 8 HTML, CSS, JavaScript Lab 8 - Trivia
+# Lab 8 - Trivia
+Test your computer science knowledge by clicking on my Github page below:
+https://michael-hoang.github.io/cs50-8-html-css-js-lab8/
