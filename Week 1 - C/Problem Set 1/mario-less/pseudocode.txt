@@ -1,0 +1,6 @@
+1. Ask user for height.
+2. If height is not 1 through 8 inclusive, ask again.
+3. Use a loop to start printing first row.
+4. Use another loop nested in the first loop to start printing (height - row #) spaces.
+5. Use another loop nested in the first loop to start printing # based on the row number.
+6. Print new line then repeat first loop if needed.
