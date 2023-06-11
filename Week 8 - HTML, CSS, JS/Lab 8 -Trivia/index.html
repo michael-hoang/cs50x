@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+        <link href="styles.css" rel="stylesheet">
+        <title>Trivia!</title>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const buttons = document.querySelectorAll('.section1 button');
+                for (let i = 0; i < buttons.length; i++) {
+                    buttons[i].addEventListener('click', function() {
+                        const questionClasses = buttons[i].classList;
+                        const result = document.querySelector(`div.${questionClasses.item(0)}`);
+                        if (questionClasses.contains('answer')) {
+                            buttons[i].style.backgroundColor = 'mediumseagreen';
+                            buttons[i].style.color = 'black';
+                            result.style.color = 'mediumseagreen';
+                            result.style.fontWeight = 'bolder';
+                            result.innerHTML = 'Correct!';
+                        } else {
+                            buttons[i].style.backgroundColor = 'salmon';
+                            buttons[i].style.color = 'black';
+                            result.style.color = 'salmon';
+                            result.style.fontWeight = 'bolder';
+                            result.innerHTML = 'Incorrect';
+
+                        }
+                        let buttonClass = buttons[i].classList.item(0);
+                        let buttonSet = document.getElementsByClassName(buttonClass);
+                        for (button of buttonSet) {
+                            button.disabled = true;
+                        }
+                    });
+                }
+
+                const frButton = document.querySelector('#frButton');
+                frButton.addEventListener('click', function() {
+                    const input = document.querySelector('#frInput');
+                    const frResult = document.querySelector('#frDiv');
+                    const input_value = input.value.toLowerCase();
+                    if (input_value === 'domain name system') {
+                        input.style.color = 'mediumseagreen';
+                        frResult.innerHTML = 'Correct!';
+                        frResult.style.color = 'mediumseagreen';
+                    } else {
+                        input.style.color = 'salmon';
+                        frResult.innerHTML = 'Incorrect';
+                        frResult.style.color = 'salmon';
+                    }
+                    frResult.style.fontWeight = 'bolder';
+                    input.disabled = true;
+                    frButton.disabled = true;
+                    })
+            });
+
+        </script>
+    </head>
+    <body>
+        <div class="header">
+            <h1>Trivia!</h1>
+        </div>
+
+        <div class="container">
+            <div class="section1">
+                <h2>Part 1: Multiple Choice </h2>
+                <hr>
+                <!-- TODO: Add multiple choice question here -->
+                <h3>In any programming language, what is the most common way to iterate through an array?</h3>
+                <div class="question1">&nbsp</div>
+                <button class="question1">If Statements</button>
+                <button class="question1">Do-while Loops</button>
+                <button class="question1">While Loops</button>
+                <button class="question1 answer">For Loops</button>
+                <div></div>
+                <h3>In the programming language "Python", which of these statements would display the string "Hello World" correctly?</h3>
+                <div class="question2">&nbsp</div>
+                <button class="question2">printf("Hello World")</button>
+                <button class="question2">console.log("Hello World")</button>
+                <button class="question2">echo "Hello World"</button>
+                <button class="question2 answer">print("Hello World")</button>
+                <h3>In web design, what does CSS stand for?</h3>
+                <div class="question3">&nbsp</div>
+                <button class="question3">Corrective Style Sheet</button>
+                <button class="question3">Computer Style Sheet</button>
+                <button class="question3">Counter Strike: Source</button>
+                <button class="question3 answer">Cascading Style Sheet</button>
+                <h3>How long is an IPv6 address?</h3>
+                <div class="question4">&nbsp</div>
+                <button class="question4">64 bytes</button>
+                <button class="question4">32 bytes</button>
+                <button class="question4">128 bytes</button>
+                <button class="question4 answer">128 bits</button>
+                <h3>What is the correct term for the metal object in between the CPU and the CPU fan within a computer system?</h3>
+                <div class="question5">&nbsp</div>
+                <button class="question5">CPU Vent</button>
+                <button class="question5">Temperature Decipator</button>
+                <button class="question5">Heat Vent</button>
+                <button class="question5 answer">Heat Sink</button>
+                <h3>How many values can a single byte represent?</h3>
+                <div class="question6">&nbsp</div>
+                <button class="question6">255</button>
+                <button class="question6">8</button>
+                <button class="question6">1</button>
+                <button class="question6 answer">256</button>
+                <h3>What does CPU stand for?</h3>
+                <div class="question7">&nbsp</div>
+                <button class="question7 answer">Central Processing Unit</button>
+                <button class="question7">Central Process Unit</button>
+                <button class="question7">Computer Personal Unit</button>
+                <button class="question7">Central Processor Unit</button>
+            </div>
+            <br>
+            <div class="section2">
+                <h2>Part 2: Free Response</h2>
+                <hr>
+                <!-- TODO: Add free response question here -->
+                <h3>What does DNS stand for?</h3>
+                <input id="frInput">
+                <button id="frButton">Submit</button>
+                <div id="frDiv">&nbsp</div>
+                <br>
+            </div>
+        </div>
+    </body>
+</html>
