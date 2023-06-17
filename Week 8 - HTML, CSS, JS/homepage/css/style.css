@@ -1,0 +1,54 @@
+@import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap');
+
+body {
+  font-family: 'Patrick Hand', cursive;
+}
+
+.dropdown-item.active,
+.dropdown-item:active {
+  background-color: rgb(82, 200, 229);
+  color: white;
+}
+
+#spam-container {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.spam {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  animation: rainAnimation 2s linear forwards;
+}
+
+@keyframes rainAnimation {
+  0% {
+    transform: translateY(-100px) rotate(0deg);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(100vh) rotate(720deg);
+    opacity: 1;
+  }
+}
+
+#spam-me-btn {
+  display: inline-block;
+  margin: 10px;
+  position: relative;
+  max-width: 100px;
+}
+
+#spam-me-btn {
+  transition: transform 0.2s ease;
+}
+
+#spam-me-btn:active {
+  transform: scale(0.9);
+}
