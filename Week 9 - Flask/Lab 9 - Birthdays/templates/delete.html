@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+  <head>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+    <link href="/static/styles.css" rel="stylesheet">
+    <title>Birthdays</title>
+  </head>
+
+  <body>
+    <div class="header">
+      <h1>Birthdays</h1>
+    </div>
+    {% for row in birthday %}
+    <div class="container">
+      <p>
+        Are you sure you want to delete
+        <span class="bold">{{ row.name }} (Birthday: {{ row.month }}/{{ row.day }})</span>?
+      </p>
+      <div class="yes-no-btn-container">
+        <form action="/delete" method="post">
+          <input name="id" type="hidden" value="{{ row.id }}">
+          <button type="submit">Yes</button>
+        </form>
+        <form action="/delete" method="get">
+          <button type="submit">No</button>
+        </form>
+      </div>
+    </div>
+    {% endfor %}
+  </body>
+
+</html>

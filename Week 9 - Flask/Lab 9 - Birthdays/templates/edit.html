@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+  <head>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+    <link href="/static/styles.css" rel="stylesheet">
+    <title>Birthdays</title>
+  </head>
+
+  <body>
+    <div class="header">
+      <h1>Birthdays</h1>
+    </div>
+    {% for row in birthday %}
+    <div class="container">
+      <p>
+        Editing <span class="bold">{{ row.name }} (Birthday: {{ row.month }}/{{ row.day }})</span>:
+      </p>
+      <div>
+        <form action="/edit" id="edit-form" method="post">
+          <input name="id" type="hidden" value="{{ row.id }}">
+          <span class="edit-form-input">
+            <span>Name:</span>
+            <input name="name" placeholder="Enter new name" type="text" value="{{ row.name }}">
+          </span>
+          <span class="edit-form-input">
+            <span>Month:</span>
+            <input class="date-input" name="month" placeholder="Enter new month" type="text" value="{{ row.month }}">
+          </span>
+          <span class="edit-form-input">
+            <span>Day:</span>
+            <input class="date-input" name="day" placeholder="Enter new day" type="text" value="{{ row.day }}">
+          </span>
+          </form>
+        <div class="save-cancel-btn-container">
+          <button form="edit-form" type="submit">Save</button>
+          <form action="/edit" method="get">
+            <button type="submit">Cancel</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </body>
+
+</html>
