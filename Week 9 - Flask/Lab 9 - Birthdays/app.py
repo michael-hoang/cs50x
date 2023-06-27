@@ -30,7 +30,10 @@ def index():
         month = request.form.get("month")
         day = request.form.get("day")
         db.execute(
-            "INSERT INTO birthdays (name, month, day) VALUES (?, ?, ?)", name, month, day
+            "INSERT INTO birthdays (name, month, day) VALUES (?, ?, ?)",
+            name,
+            month,
+            day,
         )
         return redirect("/")
 
@@ -39,11 +42,13 @@ def index():
         all_birthdays = db.execute("SELECT * FROM birthdays")
         return render_template("index.html", all_birthdays=all_birthdays)
 
+
 @app.route("/confirm-delete", methods=["POST"])
 def confirm_delete():
     id = request.form.get("id")
     birthday = db.execute("SELECT * FROM birthdays WHERE id = ?", id)
     return render_template("delete.html", birthday=birthday)
+
 
 @app.route("/delete", methods=["GET", "POST"])
 def delete():
@@ -53,11 +58,13 @@ def delete():
 
     return redirect("/")
 
+
 @app.route("/confirm-edit", methods=["POST"])
 def confirm_edit():
     id = request.form.get("id")
     birthday = db.execute("SELECT * FROM birthdays WHERE id = ?", id)
     return render_template("edit.html", birthday=birthday)
+
 
 @app.route("/edit", methods=["GET", "POST"])
 def edit():
@@ -74,3 +81,7 @@ def edit():
             db.execute("UPDATE birthdays SET day = ? WHERE id = ?", day, id)
 
     return redirect("/")
+
+
+if __name__ == "__main__":
+    app.run(debug=True)

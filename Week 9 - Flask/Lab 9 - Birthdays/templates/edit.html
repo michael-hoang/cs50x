@@ -26,11 +26,11 @@
           </span>
           <span class="edit-form-input">
             <span>Month:</span>
-            <input class="date-input" name="month" placeholder="Enter new month" type="text" value="{{ row.month }}">
+            <input class="date-input" max="12" min="1" name="month" placeholder="Enter new month" type="number" value="{{ row.month }}">
           </span>
           <span class="edit-form-input">
             <span>Day:</span>
-            <input class="date-input" name="day" placeholder="Enter new day" type="text" value="{{ row.day }}">
+            <input class="date-input" max="31" min="1" name="day" placeholder="Enter new day" type="number" value="{{ row.day }}">
           </span>
           </form>
         <div class="save-cancel-btn-container">
