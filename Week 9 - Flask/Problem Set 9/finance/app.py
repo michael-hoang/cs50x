@@ -62,7 +62,6 @@ def login():
 
     # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
-
         # Ensure username was submitted
         if not request.form.get("username"):
             return apology("must provide username", 403)
@@ -72,10 +71,14 @@ def login():
             return apology("must provide password", 403)
 
         # Query database for username
-        rows = db.execute("SELECT * FROM users WHERE username = ?", request.form.get("username"))
+        rows = db.execute(
+            "SELECT * FROM users WHERE username = ?", request.form.get("username")
+        )
 
         # Ensure username exists and password is correct
-        if len(rows) != 1 or not check_password_hash(rows[0]["hash"], request.form.get("password")):
+        if len(rows) != 1 or not check_password_hash(
+            rows[0]["hash"], request.form.get("password")
+        ):
             return apology("invalid username and/or password", 403)
 
         # Remember which user has logged in
@@ -109,7 +112,16 @@ def quote():
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
-    """Register user"""
+    """
+    Register user
+    Note: Clicking "Register" at the top left makes a "GET" request, since we are just requesting for the register.html template.
+    Clicking on the "Register" button on the register.html template makes a "POST" request since we are trying to 'post' or send
+    data to the server. In this register method, we only need to check if the user is making a "POST" request and then query the
+    the database. Otherwise, the method will direct the user via "GET" to the register.html template.
+    """
+    if request.method == "POST":
+        pass
+
     return render_template("register.html")
 
 
@@ -118,3 +130,7 @@ def register():
 def sell():
     """Sell shares of stock"""
     return apology("TODO")
+
+
+if __name__ == "__main__":
+    app.run(debug=True)
