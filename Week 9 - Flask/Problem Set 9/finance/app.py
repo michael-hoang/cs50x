@@ -121,10 +121,12 @@ def register():
     """
     if request.method == "POST":
         # Make sure all three input fields (Username, Password, and Confirm Password) are not empty.
+        # This is second layer validation on the backend.
         username = request.form.get("username")
-        if not db.execute("SELECT * FROM users WHERE username = ?", username):
-            print("registered")
-       
+        password = request.form.get("password")
+        pw_confirm = request.form.get("password-confirm")
+        if username and password and pw_confirm:
+            print("all true")
 
     return render_template("register.html")
 
