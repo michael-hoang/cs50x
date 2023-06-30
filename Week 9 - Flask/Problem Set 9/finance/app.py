@@ -120,7 +120,11 @@ def register():
     the database. Otherwise, the method will direct the user via "GET" to the register.html template.
     """
     if request.method == "POST":
-        pass
+        # Make sure all three input fields (Username, Password, and Confirm Password) are not empty.
+        username = request.form.get("username")
+        if not db.execute("SELECT * FROM users WHERE username = ?", username):
+            print("registered")
+       
 
     return render_template("register.html")
 
