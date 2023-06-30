@@ -124,7 +124,7 @@ def register():
         # This is second layer validation on the backend.
         username = request.form.get("username")
         password = request.form.get("password")
-        pw_confirm = request.form.get("password-confirm")
+        pw_confirm = request.form.get("confirmation")
         if (
             username
             and password
