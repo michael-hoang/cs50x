@@ -125,8 +125,16 @@ def register():
         username = request.form.get("username")
         password = request.form.get("password")
         pw_confirm = request.form.get("password-confirm")
-        if username and password and pw_confirm:
+        if (
+            username
+            and password
+            and pw_confirm
+            # Also check if username is not in database
+            and not db.execute("SELECT * FROM users WHERE username = ?", username)
+        ):
             print("all true")
+        else:
+            return apology("Sorry. Username already exists or required fields were not completed.")
 
     return render_template("register.html")
 
