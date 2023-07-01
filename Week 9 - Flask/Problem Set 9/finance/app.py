@@ -109,7 +109,14 @@ def quote():
     """Get stock quote."""
     if request.method == "POST":
         symbol = request.form.get("symbol").upper()
-        
+        stock = lookup(symbol)
+        if not stock:
+            return render_template("quoted.html", price="Make sure symbol is correct.", symbol="N/A")
+        return render_template(
+            "quoted.html",
+            price=(usd(stock["price"]) + " per share"),
+            symbol=stock["symbol"],
+        )
 
     return render_template("quote.html")
 
