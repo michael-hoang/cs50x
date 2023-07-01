@@ -120,9 +120,9 @@ def register():
     the database. Otherwise, the method will direct the user via "GET" to the register.html template.
     """
     if request.method == "POST":
-        username = request.form.get("username")
-        password = request.form.get("password")
-        pw_confirm = request.form.get("confirmation")
+        username = request.form.get("username").strip()
+        password = request.form.get("password").strip()
+        pw_confirm = request.form.get("confirmation").strip()
         # Ensure all three input fields (Username, Password, and Confirm Password) are not empty. (2nd layer validiation in the backend)
         if not username or not password or not pw_confirm:
             return apology("Do not leave any blank fields.")
@@ -131,10 +131,14 @@ def register():
             return apology("Password confirmation non-match.")
         # Ensure username does not exist.
         if db.execute("SELECT * FROM users WHERE username = ?", username):
-            return apology("Username is already taken.")
-
+            return apology("Username is already registered.")
+        # Store username and password hash in database, and then flash successful registration message to user at login.html.
         hash = generate_password_hash(password)
         db.execute("INSERT INTO users (username, hash) VALUES (?, ?)", username, hash)
+        flash(
+            "Thank you for registering an account with C$50 Finance. Please log in to continue."
+        )
+        return render_template("login.html")
 
     return render_template("register.html")
 
