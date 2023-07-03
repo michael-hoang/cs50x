@@ -47,17 +47,19 @@ def buy():
         symbol = request.form.get("symbol")
         try:
             price = lookup(symbol)["price"]
+            shares = int(request.form.get("shares"))
         except TypeError:
             return apology(
                 "Symbol not found in Yahoo Finance's database. If you believe this to be incorrect, please contact their API department at mail-api@yahooinc.com. Really appreciate it!"
             )
+        except ValueError:
+            shares = int(request.form.get("shares").split(".")[0])
+        else:
+            id = session["user_id"]
+            cash = float(
+                db.execute("SELECT cash FROM users WHERE id = ?", id)[0]["cash"]
+            )
 
-        shares = request.form.get("shares")
-
-        id = session["user_id"]
-        cash = db.execute("SELECT cash FROM users WHERE id = ?", id)[0]["cash"]
-
-        print(symbol, shares, price, id, cash)
     return render_template("buy.html")
 
 
