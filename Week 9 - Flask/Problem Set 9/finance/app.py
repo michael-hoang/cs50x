@@ -61,6 +61,9 @@ def buy():
             cash = float(
                 db.execute("SELECT cash FROM users WHERE id = ?", id)[0]["cash"]
             )
+            total = price * shares
+            if total > cash:
+                return apology("Insuffient funds. Need to deposite more cash.")
 
     return render_template("buy.html")
 
