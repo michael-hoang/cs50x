@@ -54,7 +54,9 @@ def buy():
             )
         except ValueError:
             shares = int(request.form.get("shares").split(".")[0])
-        else:
+        finally:
+            if shares < 0:
+                return apology("Click 'Sell' if you are trying to sell shares.")
             id = session["user_id"]
             cash = float(
                 db.execute("SELECT cash FROM users WHERE id = ?", id)[0]["cash"]
