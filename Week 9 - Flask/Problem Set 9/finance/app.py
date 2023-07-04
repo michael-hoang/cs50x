@@ -80,6 +80,9 @@ def buy():
             # Update user's remaining cash balance
             remaining_cash = cash - total
             db.execute("UPDATE users SET cash = ? WHERE id = ?", remaining_cash, id)
+            flash(
+                f"You have succesfully purchased {shares} share(s) of {symbol} at {usd(price)} per share. Your total cost was {usd(total)}, and your remaining cash balance is {usd(remaining_cash)}."
+            )
 
     return render_template("buy.html")
 
