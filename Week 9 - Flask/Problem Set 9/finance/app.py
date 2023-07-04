@@ -1,3 +1,4 @@
+import datetime as dt
 import os
 
 from cs50 import SQL
@@ -44,7 +45,7 @@ def index():
 def buy():
     """Buy shares of stock"""
     if request.method == "POST":
-        symbol = request.form.get("symbol")
+        symbol = request.form.get("symbol").upper()
         try:
             price = lookup(symbol)["price"]
             shares = int(request.form.get("shares"))
@@ -53,17 +54,32 @@ def buy():
                 "Symbol not found in Yahoo Finance's database. If you believe this to be incorrect, please contact their API department at mail-api@yahooinc.com. Really appreciate it!"
             )
         except ValueError:
+            # Handle decimal integers (ex. 1.0)
             shares = int(request.form.get("shares").split(".")[0])
-        finally:
-            if shares < 0:
-                return apology("Click 'Sell' if you are trying to sell shares.")
-            id = session["user_id"]
-            cash = float(
-                db.execute("SELECT cash FROM users WHERE id = ?", id)[0]["cash"]
+
+        if shares < 0:
+            return apology("Click 'Sell' if you are trying to sell shares.")
+
+        id = session["user_id"]
+        cash = float(db.execute("SELECT cash FROM users WHERE id = ?", id)[0]["cash"])
+        total = price * shares
+
+        if total > cash:
+            return apology("Insuffient funds. Need to deposite more cash.")
+        else:
+            # Execute buy order
+            db.execute(
+                "INSERT INTO history (trans_type, symbol, quantity, price, date, user_id) VALUES (?, ?, ?, ?, ?, ?)",
+                "buy",
+                symbol,
+                shares,
+                price,
+                dt.datetime.now().strftime("%m/%d/%Y %H:%M:%S"),
+                id,
             )
-            total = price * shares
-            if total > cash:
-                return apology("Insuffient funds. Need to deposite more cash.")
+            # Update user's remaining cash balance
+            remaining_cash = cash - total
+            db.execute("UPDATE users SET cash = ? WHERE id = ?", remaining_cash, id)
 
     return render_template("buy.html")
 
