@@ -37,7 +37,53 @@ def after_request(response):
 @login_required
 def index():
     """Show portfolio of stocks"""
-    return render_template("index.html")
+
+    def get_stock_transactions(symbol: str) -> list:
+        """Return all transactions for a specific stock."""
+        return db.execute(
+            "SELECT * FROM history WHERE user_id = ? AND symbol = ?",
+            session["user_id"],
+            symbol,
+        )
+
+    def get_currently_owned_stocks() -> list:
+        """Return a list of currently owned stocks by the user."""
+        return [
+            stock["symbol"]
+            for stock in db.execute(
+                "SELECT * FROM current_stock_ownership WHERE user_id = ? ORDER BY symbol",
+                session["user_id"],
+            )
+        ]
+
+    total_cash = db.execute("SELECT cash FROM users WHERE id = ?", session["user_id"])
+    total_portfolio_value = 0
+    owned_stocks = get_currently_owned_stocks()
+    portfolio = []
+    for symbol in owned_stocks:
+        trxs = get_stock_transactions(symbol)
+        qty = 0
+        for trx in trxs:
+            qty += int(trx["quantity"])
+
+        current_price = lookup(symbol)["price"]
+        total_value = qty * current_price
+        total_portfolio_value += total_value
+        portfolio.append(
+            {
+                "symbol": symbol,
+                "quantity": qty,
+                "current_price": usd(current_price),
+                "total_value": usd(total_value),
+            }
+        )
+
+    return render_template(
+        "index.html",
+        total_cash=usd(total_cash[0]["cash"]),
+        total_portfolio_value=usd(total_portfolio_value),
+        portfolio=portfolio,
+    )
 
 
 @app.route("/buy", methods=["GET", "POST"])
@@ -69,8 +115,7 @@ def buy():
         else:
             # Execute buy order
             db.execute(
-                "INSERT INTO history (trans_type, symbol, quantity, price, date, user_id) VALUES (?, ?, ?, ?, ?, ?)",
-                "buy",
+                "INSERT INTO history (symbol, quantity, price, date, user_id) VALUES (?, ?, ?, ?, ?)",
                 symbol,
                 shares,
                 price,
@@ -83,6 +128,21 @@ def buy():
             flash(
                 f"You have succesfully purchased {shares} share(s) of {symbol} at {usd(price)} per share. Your total cost was {usd(total)}, and your remaining cash balance is {usd(remaining_cash)}."
             )
+
+            # Add symbol to the current_stock_ownership table, if not already
+            stocks_list = [
+                stock["symbol"]
+                for stock in db.execute(
+                    "SELECT * FROM current_stock_ownership WHERE user_id = ? ORDER BY symbol",
+                    id,
+                )
+            ]
+            if symbol not in stocks_list:
+                db.execute(
+                    "INSERT INTO current_stock_ownership (user_id, symbol) VALUES (?, ?)",
+                    id,
+                    symbol,
+                )
 
     return render_template("buy.html")
 

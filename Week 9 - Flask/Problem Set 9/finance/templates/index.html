@@ -6,8 +6,8 @@ Dashboard
 
 {% block main %}
 <div class="container dash-head">
-  <h4>Total Cash:</h3>
-  <h4>Total Portfolio Value:</h3>
+  <h4>Total Cash: {{ total_cash }}</h3>
+  <h4>Total Portfolio Value: {{ total_portfolio_value }}</h3>
 </div>
 
 <table class="table">
@@ -19,6 +19,16 @@ Dashboard
       <th scope="col">Total Value</th>
     </tr>
   </thead>
+  <tbody>
+    {% for stock in portfolio %}
+    <tr>
+      <th>{{ stock["symbol"] }}</th>
+      <th>{{ stock["quantity"] }}</th>
+      <th>{{ stock["current_price"] }}</th>
+      <th>{{ stock["total_value"] }}</th>
+    </tr>
+    {% endfor %}
+  </tbody>
 </table>
 
 {% endblock %}
