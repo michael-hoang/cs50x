@@ -6,11 +6,12 @@ Dashboard
 
 {% block main %}
 <div class="container dash-head">
-  <h4>Total Cash: {{ total_cash }}</h3>
-  <h4>Total Portfolio Value: {{ total_portfolio_value }}</h3>
+  <h4>Total Cash: {{ total_cash }}</h4>
+  <h4>Total Portfolio Value: {{ total_portfolio_value }}</h4>
 </div>
 
-<table class="table">
+<table class="table table-striped table-bordered">
+  <caption>My Portfolio</caption>
   <thead>
     <tr>
       <th scope="col">Symbol</th>
