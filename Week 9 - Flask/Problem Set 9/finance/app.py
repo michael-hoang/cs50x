@@ -103,8 +103,8 @@ def buy():
             # Handle decimal integers (ex. 1.0)
             shares = int(request.form.get("shares").split(".")[0])
 
-        if shares < 0:
-            return apology("Click 'Sell' if you are trying to sell shares.")
+        if shares < 1:
+            return apology("Please enter a positive value for number of shares.")
 
         id = session["user_id"]
         cash = float(db.execute("SELECT cash FROM users WHERE id = ?", id)[0]["cash"])
@@ -261,6 +261,35 @@ def register():
 @login_required
 def sell():
     """Sell shares of stock"""
+
+    def get_currently_owned_stocks() -> list:
+        """Return a list of currently owned stocks by the user."""
+        return [
+            stock["symbol"]
+            for stock in db.execute(
+                "SELECT * FROM current_stock_ownership WHERE user_id = ? ORDER BY symbol",
+                session["user_id"],
+            )
+        ]
+
+    if request.method == "POST":
+        symbol = request.form.get("symbol")
+        try:
+            price = lookup(symbol)["price"]
+            shares = int(request.form.get("shares"))
+        except TypeError:
+            return apology(
+                "Symbol not found in Yahoo Finance's database. If you believe this to be incorrect, please contact their API department at mail-api@yahooinc.com. Really appreciate it!"
+            )
+        except ValueError:
+            # Handle decimal integers (ex. 1.0)
+            shares = int(request.form.get("shares").split(".")[0])
+
+        if shares < 1:
+            return apology("Please enter a positive value for number of shares.")
+        if symbol not in get_currently_owned_stocks():
+            return apology(f"You do not have any shares of {symbol}.")
+
     return render_template("sell.html")
 
 
