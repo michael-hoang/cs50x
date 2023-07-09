@@ -289,7 +289,18 @@ def sell():
         )
         if avail_shares[0]["avail_shares"] < shares:
             return apology(f"You do not have enough shares of {symbol}.")
-        
+
+        total_return = price * shares
+        # Record sell transaction in history table
+        db.execute(
+            "INSERT INTO history (symbol, quantity, price, date, user_id) VALUES (?, ?, ?, ?, ?)",
+            symbol,
+            shares,
+            -price,
+            dt.datetime.now().strftime("%m/%d/%Y %H:%M:%S"),
+            session["user_id"]
+        )
+        # Update user cash
         
 
     return render_template("sell.html")
