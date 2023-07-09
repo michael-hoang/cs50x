@@ -9,6 +9,28 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 from helpers import apology, login_required, lookup, usd
 
+
+# My own helper functions
+def get_stock_transactions(symbol: str) -> list:
+    """Return all transactions for a specific stock."""
+    return db.execute(
+        "SELECT * FROM history WHERE user_id = ? AND symbol = ?",
+        session["user_id"],
+        symbol,
+    )
+
+
+def get_currently_owned_stocks() -> list:
+    """Return a list of currently owned stocks by the user."""
+    return [
+        stock["symbol"]
+        for stock in db.execute(
+            "SELECT * FROM current_stock_ownership WHERE user_id = ? ORDER BY symbol",
+            session["user_id"],
+        )
+    ]
+
+
 # Configure application
 app = Flask(__name__)
 
@@ -37,25 +59,6 @@ def after_request(response):
 @login_required
 def index():
     """Show portfolio of stocks"""
-
-    def get_stock_transactions(symbol: str) -> list:
-        """Return all transactions for a specific stock."""
-        return db.execute(
-            "SELECT * FROM history WHERE user_id = ? AND symbol = ?",
-            session["user_id"],
-            symbol,
-        )
-
-    def get_currently_owned_stocks() -> list:
-        """Return a list of currently owned stocks by the user."""
-        return [
-            stock["symbol"]
-            for stock in db.execute(
-                "SELECT * FROM current_stock_ownership WHERE user_id = ? ORDER BY symbol",
-                session["user_id"],
-            )
-        ]
-
     total_cash = db.execute("SELECT cash FROM users WHERE id = ?", session["user_id"])
     total_portfolio_value = 0
     owned_stocks = get_currently_owned_stocks()
@@ -261,19 +264,8 @@ def register():
 @login_required
 def sell():
     """Sell shares of stock"""
-
-    def get_currently_owned_stocks() -> list:
-        """Return a list of currently owned stocks by the user."""
-        return [
-            stock["symbol"]
-            for stock in db.execute(
-                "SELECT * FROM current_stock_ownership WHERE user_id = ? ORDER BY symbol",
-                session["user_id"],
-            )
-        ]
-
     if request.method == "POST":
-        symbol = request.form.get("symbol")
+        symbol = request.form.get("symbol").upper()
         try:
             price = lookup(symbol)["price"]
             shares = int(request.form.get("shares"))
@@ -289,6 +281,14 @@ def sell():
             return apology("Please enter a positive value for number of shares.")
         if symbol not in get_currently_owned_stocks():
             return apology(f"You do not have any shares of {symbol}.")
+
+        avail_shares = db.execute(
+            "SELECT SUM(quantity) AS avail_shares FROM history WHERE user_id = ? AND symbol = ?",
+            session["user_id"],
+            symbol,
+        )
+        if avail_shares[0]["avail_shares"] < shares:
+            print("not enough")
 
     return render_template("sell.html")
 
