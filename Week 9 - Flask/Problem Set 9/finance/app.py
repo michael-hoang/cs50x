@@ -306,7 +306,13 @@ def sell():
             total_return,
             session["user_id"],
         )
-        # Update current_stock_ownership table
+        # Remove symbol from current_stock_ownership table if user sells all avail_shares
+        if avail_shares[0]["avail_shares"] == shares:
+            db.execute(
+                "DELETE FROM current_stock_ownership WHERE user_id = ? AND symbol = ?",
+                session["user_id"],
+                symbol,
+            )
 
     return render_template("sell.html")
 
