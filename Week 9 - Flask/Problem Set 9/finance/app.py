@@ -129,7 +129,7 @@ def buy():
             remaining_cash = cash - total
             db.execute("UPDATE users SET cash = ? WHERE id = ?", remaining_cash, id)
             flash(
-                f"You have succesfully purchased {shares} share(s) of {symbol} at {usd(price)} per share. Your total cost was {usd(total)}, and your remaining cash balance is {usd(remaining_cash)}."
+                f"You have successfully purchased {shares} share(s) of {symbol} at {usd(price)} per share. Your total cost was {usd(total)}, and your remaining cash balance is {usd(remaining_cash)}."
             )
 
             # Add symbol to the current_stock_ownership table, if not already
@@ -313,6 +313,13 @@ def sell():
                 session["user_id"],
                 symbol,
             )
+
+        remaining_cash = db.execute(
+            "SELECT cash FROM users WHERE id = ?", session["user_id"]
+        )
+        flash(
+            f"You have successfully sold {shares} share(s) of {symbol} at {usd(price)} per share. Your total return was {usd(total_return)}, and your updated cash balance is {usd(remaining_cash[0]['cash'])}."
+        )
 
     return render_template("sell.html")
 
