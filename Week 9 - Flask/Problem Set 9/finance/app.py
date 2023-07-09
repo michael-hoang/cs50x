@@ -288,7 +288,9 @@ def sell():
             symbol,
         )
         if avail_shares[0]["avail_shares"] < shares:
-            print("not enough")
+            return apology(f"You do not have enough shares of {symbol}.")
+        
+        
 
     return render_template("sell.html")
 
