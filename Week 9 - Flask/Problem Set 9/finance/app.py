@@ -295,13 +295,18 @@ def sell():
         db.execute(
             "INSERT INTO history (symbol, quantity, price, date, user_id) VALUES (?, ?, ?, ?, ?)",
             symbol,
-            shares,
-            -price,
+            -shares,
+            price,
             dt.datetime.now().strftime("%m/%d/%Y %H:%M:%S"),
-            session["user_id"]
+            session["user_id"],
         )
         # Update user cash
-        
+        db.execute(
+            "UPDATE users SET cash = cash + ? WHERE id = ?",
+            total_return,
+            session["user_id"],
+        )
+        # Update current_stock_ownership table
 
     return render_template("sell.html")
 
