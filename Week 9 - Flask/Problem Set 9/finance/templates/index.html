@@ -5,13 +5,36 @@ Dashboard
 {% endblock %}
 
 {% block main %}
-<div class="container dash-head">
-  <h4>Total Cash: {{ total_cash }}</h4>
-  <h4>Total Portfolio Value: {{ total_portfolio_value }}</h4>
+<h2 class="display-4 text-light mb-5">My Dashboard</h2>
+
+<div class="card-group dash-head">
+
+  <div class="card bg-dark border-light mb-3">
+    <div class="h3 card-header text-light">Total Cash</div>
+    <div class="card-body text-light">
+      <div class="h1 card-body">{{ total_cash }}</div>
+      <a href="#" class="btn btn-primary">Deposit</a>
+    </div>
+  </div>
+
+  <div class="card bg-dark border-light mb-3">
+    <div class="h3 card-header text-light">Total Portfolio Value</div>
+    <div class="card-body text-light">
+      <div class="h1 card-body">{{ total_portfolio_value }}</div> 
+    </div>
+  </div>
+
+  <div class="card bg-dark border-light mb-3">
+    <div class="h3 card-header text-light">Total Account Value</div>
+    <div class="card-body text-light">
+      <div class="h1 card-body">{{ total_account_value }}</div> 
+    </div>
+  </div>
+
 </div>
 
-<table class="table table-striped table-bordered">
-  <caption>My Portfolio</caption>
+<table class="caption-top table table-dark table-striped table-bordered">
+  <caption class="text-light">Portfolio</caption>
   <thead>
     <tr>
       <th scope="col">Symbol</th>

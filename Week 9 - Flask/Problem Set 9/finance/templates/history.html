@@ -5,38 +5,42 @@ History
 {% endblock %}
 
 {% block main %}
-<table class="table table-bordered">
-  <caption>My History</caption>
-  <thead>
-    <tr>
-      <th scope="col">Date</th>
-      <th scope="col">Symbol</th>
-      <th scope="col">Transaction</th>
-      <th scope="col">Filled Quantity</th>
-      <th scope="col">Filled Price</th>
-      <th scope="col">Total</th>
-    </tr>
-  </thead>
+<h2 class="display-4 text-light mb-5">History</h2>
 
-  <tbody>
-    {% for trx in history %}
-    {% if trx["quantity"] > 0 %}
-    <tr class="table-success text-success">
-    {% else %}
-    <tr class="table-danger text-danger" >
-    {% endif %}
-      <td>{{ trx["date"] }}</td>
-      <td>{{ trx["symbol"] }}</td>
+<div class="table-responsive ms-5 me-5">
+  <table class="table table-light">
+    <caption>All Transactions</caption>
+    <thead>
+      <tr>
+        <th scope="col">Date</th>
+        <th scope="col">Symbol</th>
+        <th scope="col">Transaction</th>
+        <th scope="col">Filled Quantity</th>
+        <th scope="col">Filled Price</th>
+        <th scope="col">Total</th>
+      </tr>
+    </thead>
+  
+    <tbody class="table-group-divider">
+      {% for trx in history %}
       {% if trx["quantity"] > 0 %}
-      <td>Buy</td>
+      <tr class="table-success">
       {% else %}
-      <td>Sell</td>
+      <tr class="table-danger" >
       {% endif %}
-      <td>{{ abs(trx["quantity"]) }}</td>
-      <td>{{ "${:,.2f}".format(trx["price"]) }}</td>
-      <td>{{ "${:,.2f}".format(abs(trx["quantity"]) * trx["price"]) }}</td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
+        <td>{{ trx["date"] }}</td>
+        <td>{{ trx["symbol"] }}</td>
+        {% if trx["quantity"] > 0 %}
+        <td style="color: green">Buy</td>
+        {% else %}
+        <td style="color: red;">Sell</td>
+        {% endif %}
+        <td>{{ abs(trx["quantity"]) }}</td>
+        <td>{{ "${:,.2f}".format(trx["price"]) }}</td>
+        <td>{{ "${:,.2f}".format(abs(trx["quantity"]) * trx["price"]) }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
 {% endblock %}

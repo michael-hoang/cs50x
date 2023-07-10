@@ -86,6 +86,7 @@ def index():
         total_cash=usd(total_cash[0]["cash"]),
         total_portfolio_value=usd(total_portfolio_value),
         portfolio=portfolio,
+        total_account_value=usd(total_cash[0]["cash"] + total_portfolio_value),
     )
 
 
