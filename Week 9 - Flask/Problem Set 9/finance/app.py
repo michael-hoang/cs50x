@@ -155,8 +155,10 @@ def buy():
 def history():
     """Show history of transactions"""
     history = db.execute("SELECT * FROM history WHERE user_id = ?", session["user_id"])
+    # Have the most recent transactions be first on the list
+    history.reverse()
 
-    return render_template("history.html", history=history)
+    return render_template("history.html", history=history, abs=abs)
 
 
 @app.route("/login", methods=["GET", "POST"])

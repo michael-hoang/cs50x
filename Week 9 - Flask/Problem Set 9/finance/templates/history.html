@@ -5,7 +5,7 @@ History
 {% endblock %}
 
 {% block main %}
-<table class="table table-striped table-bordered">
+<table class="table table-bordered">
   <caption>My History</caption>
   <thead>
     <tr>
@@ -17,5 +17,22 @@ History
       <th scope="col">Total</th>
     </tr>
   </thead>
+
+  <tbody>
+    {% for trx in history %}
+    <tr>
+      <td>{{ trx["date"] }}</td>
+      <td>{{ trx["symbol"] }}</td>
+      {% if trx["quantity"] > 0 %}
+      <td>Buy</td>
+      {% else %}
+      <td>Sell</td>
+      {% endif %}
+      <td>{{ abs(trx["quantity"]) }}</td>
+      <td>{{ "${:,.2f}".format(trx["price"]) }}</td>
+      <td>{{ "${:,.2f}".format(abs(trx["quantity"]) * trx["price"]) }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
 </table>
 {% endblock %}
