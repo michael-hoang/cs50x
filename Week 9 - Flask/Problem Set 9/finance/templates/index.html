@@ -13,21 +13,23 @@ Dashboard
     <div class="h3 card-header text-light">Total Cash</div>
     <div class="card-body text-light">
       <div class="h1 card-body">{{ total_cash }}</div>
-      <a href="#" class="btn btn-primary">Deposit</a>
+      <form action="/deposit" method="get">
+        <button class="btn btn-primary" type="submit">Deposit</button>
+      </form>
     </div>
   </div>
 
   <div class="card bg-dark border-light mb-3">
     <div class="h3 card-header text-light">Total Portfolio Value</div>
     <div class="card-body text-light">
-      <div class="h1 card-body">{{ total_portfolio_value }}</div> 
+      <div class="h1 card-body">{{ total_portfolio_value }}</div>
     </div>
   </div>
 
   <div class="card bg-dark border-light mb-3">
     <div class="h3 card-header text-light">Total Account Value</div>
     <div class="card-body text-light">
-      <div class="h1 card-body">{{ total_account_value }}</div> 
+      <div class="h1 card-body">{{ total_account_value }}</div>
     </div>
   </div>
 

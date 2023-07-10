@@ -329,5 +329,11 @@ def sell():
     return render_template("sell.html")
 
 
+@app.route("/deposit", methods=["GET", "POST"])
+@login_required
+def deposit():
+    return render_template("deposit.html")
+
+
 if __name__ == "__main__":
     app.run(debug=True)
