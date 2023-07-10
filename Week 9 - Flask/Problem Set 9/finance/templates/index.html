@@ -23,10 +23,10 @@ Dashboard
   <tbody>
     {% for stock in portfolio %}
     <tr>
-      <th>{{ stock["symbol"] }}</th>
-      <th>{{ stock["quantity"] }}</th>
-      <th>{{ stock["current_price"] }}</th>
-      <th>{{ stock["total_value"] }}</th>
+      <td>{{ stock["symbol"] }}</td>
+      <td>{{ stock["quantity"] }}</td>
+      <td>{{ stock["current_price"] }}</td>
+      <td>{{ stock["total_value"] }}</td>
     </tr>
     {% endfor %}
   </tbody>
