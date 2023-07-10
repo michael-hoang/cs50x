@@ -106,7 +106,9 @@ def buy():
         except ValueError:
             # Handle decimal integers (ex. 1.0)
             # shares = int(request.form.get("shares").split(".")[0])
-            return apology("Fractional shares are not allowed. Enter only whole share(s).")
+            return apology(
+                "Fractional shares are not allowed. Enter only whole share(s)."
+            )
 
         if shares < 1:
             return apology("Please enter a positive value for number of shares.")
@@ -325,7 +327,14 @@ def sell():
             f"You have successfully sold {shares} share(s) of {symbol} at {usd(price)} per share. Your total return was {usd(total_return)}, and your updated cash balance is {usd(remaining_cash[0]['cash'])}."
         )
 
-    return render_template("sell.html")
+    current_stocks = db.execute(
+        "SELECT symbol FROM current_stock_ownership WHERE user_id = ?",
+        session["user_id"],
+    )
+    curr_stocks_list = [stock["symbol"] for stock in current_stocks]
+    curr_stocks_list.sort()
+
+    return render_template("sell.html", current_stocks=curr_stocks_list)
 
 
 @app.route("/deposit", methods=["GET", "POST"])
