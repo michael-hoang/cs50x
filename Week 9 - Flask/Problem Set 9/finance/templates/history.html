@@ -20,7 +20,11 @@ History
 
   <tbody>
     {% for trx in history %}
-    <tr>
+    {% if trx["quantity"] > 0 %}
+    <tr class="table-success text-success">
+    {% else %}
+    <tr class="table-danger text-danger" >
+    {% endif %}
       <td>{{ trx["date"] }}</td>
       <td>{{ trx["symbol"] }}</td>
       {% if trx["quantity"] > 0 %}
