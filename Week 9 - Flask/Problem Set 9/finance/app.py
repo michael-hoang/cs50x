@@ -332,6 +332,12 @@ def sell():
 @app.route("/deposit", methods=["GET", "POST"])
 @login_required
 def deposit():
+    if request.method == "POST":
+        dep_amt = float(request.form.get("deposit"))
+        db.execute(
+            "UPDATE users SET cash = cash + ? WHERE id = ?", dep_amt, session["user_id"]
+        )
+
     return render_template("deposit.html")
 
 
