@@ -337,6 +337,9 @@ def deposit():
         db.execute(
             "UPDATE users SET cash = cash + ? WHERE id = ?", dep_amt, session["user_id"]
         )
+        flash(f"You have successfully deposited {usd(dep_amt)} into your account.")
+
+        return redirect("/")
 
     return render_template("deposit.html")
 
