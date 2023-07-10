@@ -105,7 +105,8 @@ def buy():
             )
         except ValueError:
             # Handle decimal integers (ex. 1.0)
-            shares = int(request.form.get("shares").split(".")[0])
+            # shares = int(request.form.get("shares").split(".")[0])
+            return apology("Fractional shares are not allowed. Enter only whole share(s).")
 
         if shares < 1:
             return apology("Please enter a positive value for number of shares.")
